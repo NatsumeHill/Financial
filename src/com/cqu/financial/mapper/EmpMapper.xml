@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.cqu.financial.mapper.EmpMapper">
+
+	<select id="findAll" resultType="com.cqu.financial.entity.Emp">
+		select * from emp
+	</select>
+	<insert id="addEmp" parameterType="com.cqu.financial.entity.Emp">
+		insert into emp(ename,job) values(#{ename}, #{job})
+	</insert>
+	<delete id="delEmp" parameterType="java.lang.String">
+		delete from emp where empno = #{empno}
+	</delete>
+	<select id="findById" parameterType="java.lang.String" resultType="com.cqu.financial.entity.Emp">
+		select * from emp where empno=#{empno}
+	</select>
+	<update id="modifyEmp" parameterType="com.cqu.financial.entity.Emp">
+		update emp set job=#{job} where empno=#{empno}
+	</update>
+</mapper>

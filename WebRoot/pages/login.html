@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title></title>
+
+<!-- Bootstrap core CSS -->
+<link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="../css/style.css" rel="stylesheet">
+
+<script src="../bootstrap-3.3.5-dist/js/ie-emulation-modes-warning.js"></script>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="picture-panel">
+				<div class="pict">
+					<img src="../image/bground.png" height="100%" width="100%" />
+				</div>
+			</div>
+
+			<div class="login-panel">
+				<div class="login-C">
+					<div class="login-head">
+						<h2 class="title-form">登录</h2>
+					</div>
+
+					<div class="panel-body">
+						<form role="form">
+							<fieldset>
+								<div class="error" hidden="hidden">Incorrect username or
+									password.</div>
+								<div class="form-group">
+									<input class="form-control autocheck" placeholder="请输入您的账号"
+										name="username" type="text" autofocus="" />
+								</div>
+
+								<div class="form-group">
+									<input class="form-control" placeholder="请输入账号密码"
+										name="password" type="password" value="" />
+								</div>
+
+								<div class="form-group">
+									<a class="form-control2">忘记密码？</a> <a href="Sign.html"
+										class="form-control2">还没有账户？</a>
+								</div>
+								<a class="btn">登录</a>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script
+		src="../bootstrap-3.3.5-dist/js/ie10-viewport-bug-workaround.js"></script>
+	<script src="../js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript">
+		$('.autocheck').change(
+				function(event) {
+					$(this).css('background-image',
+							'url(../image/ajax/laoding.gif)');
+					$.ajax({
+						url : '../user/validUserName',
+						type : 'POST',
+						dataType : 'text',
+						data : {
+							username : $(this).val()
+						},
+					}).done(
+							function(data) {
+								if (data == "true") {
+									$('.autocheck').css('background-image',
+											'url(../image/ajax/success.png)');
+								} else
+									$('.autocheck').css('background-image',
+											'url(../image/ajax/error.png)');
+							}).fail(function() {
+						console.log("error");
+					}).always(function() {
+						console.log("complete");
+					});
+				});
+
+		$('.btn').click(function(event) {
+			$.ajax({
+				url : '../user/check',
+				type : 'POST',
+				dataType : 'text',
+				data : {
+					"userName" : $('input[name=username]').val(),
+					"userPass" : $('input[name=password]').val()
+				}
+			}).done(function(data) {
+				console.log(data);
+				if (data == "true")
+					window.location.href = "../pages/index.html";
+				else
+					$('.error').slideDown();
+				console.log("success");
+			}).fail(function() {
+				console.log("error");
+			}).always(function() {
+				console.log("complete");
+			});
+
+		});
+	</script>
+</body>
+</html>

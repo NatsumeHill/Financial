@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.cqu.financial.mapper.BillMapper">
+	<!-- 配置映射字段- 订单视图 -->
+	<resultMap type="com.cqu.financial.entity.Bill" id="tab_bill">
+		<id property="billId" column="billId" />
+		<result property="userId" column="userId" />
+		<result property="billFlag_1" column="billFlag_1" />
+		<result property="billFlag_2" column="billFlag_2" />
+		<result property="billDate" column="billDate" />
+		<result property="billType" column="billType" />
+		<result property="billMoney" column="billMoney" />
+		<result property="isHide" column="isHide" />
+	</resultMap>
+	<!-- 配置映射字段-收入支出视图 -->
+	<resultMap type="com.cqu.financial.entity.BillInOut" id="tab_billInOut">
+		<result property="billFlag" column="billFlag" />
+		<result property="billType" column="billType" />
+		<result property="billSumMoney" column="sumMoney" />
+	</resultMap>
+	<!-- 配置映射字段-消费趋势视图 -->
+	<resultMap type="com.cqu.financial.entity.TrendView" id="view_trend">
+		<result property="month" column="month" />
+		<result property="sumMoney" column="monthSum" />
+	</resultMap>
+
+	<!-- 查询所有账单记录 -->
+	<select id="findAll" resultMap="tab_bill">
+		select * from bill
+	</select>
+
+	<!-- 查询收入支出 -->
+	<select id="findInOut" parameterType="java.lang.String"
+		resultMap="tab_billInOut">
+		select
+		<choose>
+			<when test="billFlag == 'billFlag_2'">
+				billFlag_2
+			</when>
+			<otherwise>
+				billFlag_1
+			</otherwise>
+		</choose>
+		as billFlag
+		,billType,sum(BillMoney) as sumMoney
+		from bill where
+		billType=#{billType} and userId=#{userId}
+		<choose>
+			<when test="billFlag == 'billFlag_2'">
+				group by (billFlag_2)
+			</when>
+			<otherwise>
+				group by (billFlag_1)
+			</otherwise>
+		</choose>
+	</select>
+
+	<!-- 按账单ID查询 -->
+	<select id="findById" parameterType="java.lang.String"
+		resultMap="tab_bill">
+		select * from bill where billId=#{billId}
+	</select>
+	<!-- 查询指定年每月消费金额 -->
+	<select id="billMonthSum" parameterType="java.lang.String"
+		resultMap="view_trend">
+		select month(billDate) as
+		month,sum(billMoney) as monthSum
+		from bill
+		where userId=#{userId} and YEAR(billDate) = #{year} and
+		billType='O' group by
+		(month(billDate))
+	</select>
+
+	<!-- 添加账单记录 -->
+	<insert id="addBill" parameterType="com.cqu.financial.entity.Bill">
+		insert into
+		bill(billId,userId,billFlag_1,billFlag_2,billType,billMoney,billDate,isHide)
+		values(#{billId},#{userId},
+		#{billFlag_1},#{billFlag_2},#{billType},#{billMoney},#{billDate},#{isHide})
+	</insert>
+
+	<!-- 更改账单记录 -->
+	<update id="modifyBill" parameterType="com.cqu.financial.entity.Bill">
+		update bill set
+		billFlag=#{billFlag},billType=#{billType},billMoney=#{billMoney},billDate=#{billDate},isHide=#{isHide}
+		where billId=#{billId}
+	</update>
+
+	<!-- 删除账单记录 -->
+	<delete id="delBill" parameterType="java.lang.String">
+		delete from bill where billId
+		= #{billId}
+	</delete>
+</mapper>

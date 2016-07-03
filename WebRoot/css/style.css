@@ -1,0 +1,157 @@
+*{
+	box-sizing: border-box;
+}
+
+body{
+	margin:0;
+	background-color: #cdcdcd;
+}
+
+.container{
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right:auto;
+	margin-left:auto;
+}
+
+.row{
+	margin-right: -15px;
+	margin-left: -15px;
+}
+
+.picture-panel{
+    float: left;
+	min-height:1px;
+	margin-top:50px;
+	margin-left:20px;
+	padding-right:15px;
+	padding-left:15px;
+	width:600px;
+	height:600px;
+}
+
+.pict{
+	padding-left:100px;
+	padding-right:100px;
+	padding-bottom:50px;
+	padding-top:50px;
+	width:600px;
+	height:500px;
+}
+
+.login-panel{
+    float: left;
+	min-height:1px;
+	margin-top:50px;
+	margin-left:20px;
+	padding-right:15px;
+	padding-left:15px;
+	width:530px;
+	height:600px;
+}
+
+.login-C{
+	position:relative;
+	margin-top:60px;
+	margin-left:60px;
+	width:360px;
+	height:auto;
+	border: 1px
+    #ddd solid;
+    border-radius: 8px;
+    background: #FFFFFF;
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.login-head{
+	padding: 10px 15px;
+	border-bottom:1px #ddd solid;
+	border-top-left-radius: 8px;
+	border-top-right-radius:8px;
+}
+
+.title-form{
+	margin-top:0;
+	margin-bottom:0;
+	color: #000000;
+	font: 25px 'Microsoft YaHei';
+	letter-spacing:0.5em;
+	text-align: center;
+}
+
+.login-body{
+	padding: 15px;
+}
+
+form{
+	display: block;
+	margin-top: 0em;
+}
+
+fieldset {
+    min-width: 0;
+    padding: 15px;
+    margin: 0;
+    border: 0;
+}
+
+.form-group{
+	margin-bottom: 35px;
+}
+
+.form-control{
+	border: 1px
+    #050505 solid;
+    border-radius: 3px;
+    width: 298px;
+    height: 38px;
+	padding:10px;
+	color: #A5A5A5;
+    font: 300 20px 'Microsoft YaHei';
+}
+
+.form-control2{
+	margin-left:15px;
+	margin-right:20px;
+	padding:10px;
+	color:#000000;
+	font: 15px 'Microsoft YaHei';
+	font-style:italic;
+	text-decoration: underline;
+}
+.autocheck{
+	background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-image: none;
+	background-size: 16px 16px;
+}
+.btn{
+    width: 298px;
+    height: 50px;
+	padding:10px;
+	border: 1px #ddd solid;
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	color: #FFFFFF;
+	border-radius: 3px;
+    font: 300 23px 'Microsoft YaHei';
+	background-color:#43b1ed;
+	letter-spacing:0.5em;
+	text-align:center;
+	text-decoration:none;
+	display: block;
+}
+
+.btn:hover{
+	background-color:#1fa1e8;
+}
+
+.error{
+	color: #911;
+	height: 38px;
+	line-height:38px;
+	margin-bottom: 20px;
+	text-align:center;
+	background:#ffd0d4;
+	border-radius: 5px;
+	border:1px solid #d2b2b2;
+}

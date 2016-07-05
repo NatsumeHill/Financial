@@ -59,7 +59,7 @@ body{
 	margin-top:60px;
 	margin-left:60px;
 	width:360px;
-	height:380px;
+	height:auto;
 	border: 1px
     #ddd solid;
     border-radius: 8px;
@@ -115,13 +115,14 @@ fieldset {
 }
 
 .btn{
+	position:relative;
+	float: left;
 	margin-left:25px;
     width: 248px;
     height: 50px;
 	padding:10px;
-	border: 1px #ddd solid;
-	box-shadow: 0 1px 1px rgba(0,0,0,.05);
-	color: #000000;
+	box-shadow:1px 4px rgba(0,0,0,0.2);
+	color: #FFFFFF;
 	border-radius: 3px;
     font: 300 23px 'Microsoft YaHei';
 	background-color:#F86F6F;
@@ -133,4 +134,14 @@ fieldset {
 
 .btn:hover{
 	background-color:#f25353;
+}
+.btn:active{
+	box-shadow: 0px 0px #fff ;
+	top: 4px;
+}
+.autocheck{
+	background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-image: none;
+	background-size: 16px 16px;
 }

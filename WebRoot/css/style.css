@@ -126,11 +126,11 @@ fieldset {
 	background-size: 16px 16px;
 }
 .btn{
+	position:relative;
     width: 298px;
     height: 50px;
 	padding:10px;
-	border: 1px #ddd solid;
-	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	box-shadow:1px 4px rgba(0,0,0,0.2);
 	color: #FFFFFF;
 	border-radius: 3px;
     font: 300 23px 'Microsoft YaHei';
@@ -144,7 +144,10 @@ fieldset {
 .btn:hover{
 	background-color:#1fa1e8;
 }
-
+.btn:active{
+	box-shadow: 0px 0px #fff ;
+	top: 4px;
+}
 .error{
 	color: #911;
 	height: 38px;
@@ -154,4 +157,28 @@ fieldset {
 	background:#ffd0d4;
 	border-radius: 5px;
 	border:1px solid #d2b2b2;
+}
+.tip{
+	position: relative;
+	color: #911;
+	width: auto;
+	height: auto;
+	float:left;
+	padding:8px;
+	margin-top: 10px;
+	margin-bottom: 15px;
+	text-align:left;
+	background:#ffd0d4;
+	border-radius: 5px;
+	border:1px solid #d2b2b2;
+}
+.arrow{
+	position:absolute;
+	width:0;
+	height:0;
+	top: -20px;
+	left: 15px;
+	font-size:0;
+	border:solid 10px;
+	border-color:transparent  transparent  #ffd0d4 transparent ;
 }

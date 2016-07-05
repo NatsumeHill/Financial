@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>喵喵利</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/index.css" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" >喵喵利</a>
+        </div>
+    </div>
+</nav>
+
+<div id="container-main" class="display-nav">
+   <div id="main-row">
+       <div id="nav-menu">
+           <div class="Head-portrait">
+               <img src="../image/client.png" height="100%" width="100%" />
+           </div>
+           <ul id="toggle">
+               <li data-src="../bill/main">
+                   <div>
+                        <span class="menu-icons fa fa-home"></span><a >个人主页</a>
+                   </div>
+               </li>
+               <li data-src="../bill/block">
+                   <div>
+                       <span class="menu-icons  fa fa-book"></span>
+                       <a >账单明细</a><span class="the-btn fa fa-chevron-down"></span>
+                   </div>
+                   <ul>
+                       <li data-src="../bill/bill-detail"><a >收支详细</a></li>
+                       <li data-src="../bill/sort-view"><a >分类查看</a></li>
+                       <li data-src="../pages/budgetl"><a >预算结余</a></li>
+                   </ul>
+               </li>
+               <li data-src="../bill/block">
+                   <div>
+                       <span class="menu-icons  fa fa-credit-card"></span>
+                       <a >理财推荐</a><span class="the-btn fa fa-chevron-down"></span>
+                   </div>
+                   <ul>
+                       <li data-src="../pages/p-recommend.html"><a >产品推荐</a></li>
+                       <li data-src="../pages/pl-recommend.html"><a >方案推荐</a></li>
+                       <li data-src="../pages/launch-plan.html"><a >发起方案</a></li>
+                   </ul>
+               </li>
+               <li data-src="../bill/block">
+                   <div>
+                       <span class="menu-icons fa fa-money"></span><a >喵喵金库</a>
+                   </div>
+               </li>
+               <li  data-src="../bill/block">
+                   <div>
+                       <span class="menu-icons fa fa-cogs"></span>
+                       <a >账户管理</a><span class="the-btn fa fa-chevron-down"></span>
+                   </div>
+                   <ul>
+                       <li data-src="../user/infor-config"><a >个人信息</a></li>
+                       <li data-src="../user/modify-pw-config"><a >修改密码</a></li>
+                   </ul>
+               </li>
+           </ul>
+       </div>
+
+       <a class="toggle-nav" id="bars"><i class="fa fa-bars"></i></a>
+
+       <div class="nav-main-window">
+           <iframe id="main-content" src="../bill/block" frameborder="0"></iframe>
+       </div>
+   </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../js/jquery1.9.1.min.js"></script>
+<script src="../js/index.js"></script>
+<script src="../js/jquery-1.11.3.js"></script>
+<script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../bootstrap-3.3.5-dist/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

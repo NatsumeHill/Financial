@@ -5,4 +5,6 @@ import com.cqu.financial.entity.User;
 public interface UserMapper {
 	public User getUserByName(String userName);
 	public int addUser(User user);
+	
+	public User selectById(String userId);
 }

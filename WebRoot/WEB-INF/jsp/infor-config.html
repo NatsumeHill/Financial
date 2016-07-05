@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>information config</title>
+
+    <script src="../js/select-province.js"></script>
+    <link href="../css/infor-config.css" rel="stylesheet">
+    <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
+</head>
+<body>
+<div id="main-container">
+    <div class="page-container">
+        <div class="page">
+            <div class="head">
+                <div class="title">完善个人信息</div>
+            </div>
+            <div class="page-body">
+                <div class="body-contain">
+                    <div class="group-control">
+                        <div class="title-control">姓名:</div>
+                        <div class="input-div">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="您的真实姓名" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-control">
+                        <div class="title-control">个性昵称:</div>
+                        <div class="input-div">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="可设置您的个性昵称" aria-describedby="basic-addon2" id="userName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-control">
+                        <div class="title-control">职业:</div>
+                        <div class="input-div">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="您的职业" aria-describedby="basic-addon2" id="userCareer">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-control">
+                        <div class="title-control">性别:</div>
+                        <div class="input-div">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="男/女/不明" aria-describedby="basic-addon2" id="userSex">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-control">
+                        <div class="title-control">收入:</div>
+                        <div class="input-div">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="***(元)" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-control">
+                        <div class="title-control">邮箱:</div>
+                        <div class="input-div">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="email@example.com" aria-describedby="basic-addon2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-control">
+                        <div class="title-control">地区(省份):</div>
+                        <div class="input-div">
+                            <div class="input-group">
+                                <div class="select-group">
+                                    <label class="sr-only" for="Select1">Select1</label>
+                                    <select id="Select1" class="select"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-control-btn">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery1.9.1.min.js"></script>
+<script type="text/javascript">
+    addressInit('Select1');
+    $.ajax({
+        url: '../user/geUserInfo',
+        type: 'POST',
+        dataType: 'json'
+    })
+    .done(function(data) {
+        $('#userName').val(data.userName);
+        $('#userCareer').val(data.userCareer);
+        $('#userSex').val(data.userSex);
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function(xhr) {
+        if(xhr.status == 302){
+            window.location.href = '../user/geUserInfo';
+        }
+    });
+    
+</script>
+</body>
+</html>

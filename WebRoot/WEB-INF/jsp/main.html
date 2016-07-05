@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<title>main</title>
+<!-- 引入 ECharts 文件 -->
+<script src="../js/echarts.js"></script>
+
+<link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="../css/main.css" rel="stylesheet">
+<link
+	href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+	rel="stylesheet">
+</head>
+<body>
+	<div id="main-container">
+		<div class="row-one">
+			<div class="select">
+				<div class="btn-toolbar" role="toolbar" aria-label="...">
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-default">按年查看</button>
+						<button type="button" class="btn btn-default">按月查看</button>
+					</div>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder=""
+							aria-describedby="basic-addon2" id='year'> <span
+							class="input-group-addon" id="basic-addon2">年</span> <input
+							type="text" class="form-control" placeholder=""
+							aria-describedby="basic-addon2" id='month'> <span
+							class="input-group-addon" id="basic-addon2">月</span>
+					</div>
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-default" id = 'submit'>确定</button>
+					</div>
+				</div>
+			</div>
+			<div class="title">
+				<div class="title-font">收入</div>
+				<div class="title-font">支出</div>
+			</div>
+			<div id="income"></div>
+			<div id="pay"></div>
+		</div>
+		<div class="row-two">
+			<div class="remind">
+				<div class="remind-title">消息提醒</div>
+				<div class="remind-message">目前没有还款提醒!</div>
+			</div>
+			<div class="treasury">
+				<div class="remind-title">喵喵金库</div>
+				<div class="remind-message">亲~ 金库目前是空的哟~</div>
+			</div>
+		</div>
+		<div class="row-three">
+			<div class="trend">
+				<div class="row-three-title">消费走势</div>
+				<div id="trend-pic"></div>
+			</div>
+			<div class="analysis">
+				<div class="row-three-title">消费分析</div>
+				<div id="analysis-pic"></div>
+			</div>
+			<div class="overage">
+				<div class="row-three-title">余额</div>
+				<div id="overage-pic"></div>
+			</div>
+		</div>
+		<div class="page-bottom"></div>
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="../js/jquery-1.11.3.min.js"></script>
+
+	<script src="../js/main.js"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+

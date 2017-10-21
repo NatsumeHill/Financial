@@ -9,7 +9,7 @@ public class Bill {
 	private String billMoney;
 	private String billType;
 	private String isHide;
-
+	private String billNote;
 	public String getBillId() {
 		return billId;
 	}
@@ -74,4 +74,12 @@ public class Bill {
 		this.isHide = isHide;
 	}
 
+	public String getBillNote() {
+		return billNote;
+	}
+
+	public void setBillNote(String billNote) {
+		this.billNote = billNote;
+	}
+	
 }

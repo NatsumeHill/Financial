@@ -2,69 +2,197 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<meta name="description" content="">
+<meta name="author" content="">
 
-    <title></title>
+<title></title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="../css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/sign-style.css" type="text/css" />
+<!-- Custom styles for this template -->
+<link href="../css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/sign-style.css" type="text/css" />
 
-    <script src="../bootstrap-3.3.5-dist/js/ie-emulation-modes-warning.js"></script>
+<script src="../bootstrap-3.3.5-dist/js/ie-emulation-modes-warning.js"></script>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="picture-panel">
-            <div class="pict"><img src="../image/bground.png" height="100%" width="100%" /></div>
-        </div>
+	<div class="container">
+		<div class="row">
+			<div class="picture-panel">
+				<div class="pict">
+					<img src="../image/bground.png" height="100%" width="100%" />
+				</div>
+			</div>
 
-        <div class="sign-panel">
-            <div class="sign-C">
-                <div class="sign-head">
-                    <h2 class="title-form">注册新用户</h2>
-                </div>
+			<div class="sign-panel">
+				<div class="sign-C">
+					<div class="sign-head">
+						<h2 class="title-form">注册新用户</h2>
+					</div>
 
-                <div class="sign-body">
-                    <form role="form">
-                        <fieldset>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="请输入账号" name="Userid" type="text" autofocus="" />
-                            </div>
+					<div class="sign-body">
+						<form role="form">
+							<fieldset>
+								<div class="error" hidden="hidden">Incorrect username or
+									password.</div>
+								<div class="form-group">
+									<input class="form-control autocheck" placeholder="请输入账号"
+										name="username" type="text" autofocus="" />
+									<div class="tip" id="nameTip" hidden="hidden">
+										<div class="arrow"></div>
+										Username is already taken
+									</div>
+								</div>
 
-                            <div class="form-group">
-                                <input class="form-control" placeholder="请输入密码" name="password" type="password" value="" />
-                            </div>
+								<div class="form-group">
+									<input class="form-control autocheck" placeholder="请输入密码"
+										name="password" type="password" value="" />
+									<div class="tip" id="passTip" hidden="hidden">
+										<div class="arrow"></div>
+										Password is too short (minimum is 7 characters)
+									</div>
+								</div>
 
-                            <div class="form-group">
-                                <input class="form-control" placeholder="请确认密码" name="cpassword" type="password" value="" />
-                            </div>
+								<div class="form-group">
+									<input class="form-control autocheck" placeholder="请确认密码"
+										name="cpassword" type="password" value="" />
+									<div class="tip" id="cpassTip" hidden="hidden">
+										<div class="arrow"></div>
+										Two passwords must be consistent
+									</div>
+								</div>
 
-                            <div class="form-group"></div><a href="../pages/index.html" class="btn">注册</a>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+								<div class="form-group"></div>
+								<a class="btn">注册</a>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../bootstrap-3.3.5-dist/js/ie10-viewport-bug-workaround.js"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script
+		src="../bootstrap-3.3.5-dist/js/ie10-viewport-bug-workaround.js"></script>
+	<script src="../js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript">
+		var validName = false;
+		var validPass = false;
+		var validCPass = false;
+        $('input[name=username]').focus(function(event) {
+            $('.error').hide();
+        });
+        $("input[name='password']").focus(function(event) {
+            $('.error').hide();
+        });
+        $("input[name='cpassword']").focus(function(event) {
+            $('.error').hide();
+        });
+		$('input[name=username]').change(
+				function(event) {
+					var element = $(this);
+					$(this).css('background-image',
+							'url(../image/ajax/laoding.gif)');
+					$.ajax({
+						url : '../user/validUserName',
+						type : 'POST',
+						dataType : 'text',
+						data : {
+							username : $(this).val()
+						},
+					}).done(
+							function(data) {
+								if (data == "false") {
+									element.css('background-image',
+											'url(../image/ajax/success.png)');
+									validName = true;
+									$('#nameTip').hide();
+								} else {
+									element.css('background-image',
+											'url(../image/ajax/error.png)');
+									validName = false;
+									$('#nameTip').slideDown();
+								}
+							}).fail(function() {
+						console.log("error");
+					}).always(function() {
+						console.log("complete");
+					});
+				});
+		$("input[name='password']").change(
+				function(event) {
+					$(this).css('background-image',
+							'url(../image/ajax/laoding.gif)');
+					if ($(this).val().length < 7) {
+						$("#passTip").slideDown();
+						$(this).css('background-image',
+								'url(../image/ajax/error.png)');
+						validPass = false;
+					} else {
+						$("#passTip").hide();
+						$(this).css('background-image',
+								'url(../image/ajax/success.png)');
+						validPass = true;
+					}
+				});
+		$("input[name='cpassword']").change(
+				function(event) {
+					$(this).css('background-image',
+							'url(../image/ajax/laoding.gif)');
+					if ($(this).val() != $("input[name='password']").val()) {
+						$("#cpassTip").slideDown();
+						$(this).css('background-image',
+								'url(../image/ajax/error.png)');
+						validCPass = false;
+					}
+
+					else {
+						$("#cpassTip").hide();
+						$(this).css('background-image',
+								'url(../image/ajax/success.png)');
+						validCPass = true;
+					}
+				});
+		$('.btn').click(function(event) {
+			if (validName && validPass && validCPass) {
+				console.log("进入ajax");
+				$.ajax({
+					url : '../user/signUp',
+					type : 'POST',
+					dataType : 'text',
+					data : {
+						"userName" : $('input[name=username]').val(),
+						"userPass" : $('input[name=cpassword]').val()
+					}
+				}).done(function(data) {
+					if (data == "true")
+						window.location.href = "../user/index";
+					else
+						$('.error').slideDown();
+					console.log("success");
+				}).fail(function() {
+					console.log("error");
+				}).always(function() {
+					console.log("complete");
+				});
+
+			}
+            else $('.error').slideDown();
+		});
+	</script>
 </body>
 </html>

@@ -1,17 +1,21 @@
 package com.cqu.financial.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 
 import com.cqu.financial.entity.Bill;
+import com.cqu.financial.entity.Page;
 import com.cqu.financial.entity.TrendView;
+import com.cqu.financial.entity.User;
 import com.cqu.financial.mapper.BillMapper;
 import com.cqu.financial.util.JsonUtil;
 
@@ -26,10 +30,6 @@ public class BillServiceImpl implements BillService {
 
 	@Override
 	public boolean addBill(Bill bill, String userId) {
-		Date d = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String dateNowStr = sdf.format(d);
-		bill.setBillDate(dateNowStr);
 		UUID uuid = UUID.randomUUID();
 		// uuid转换为字符串时会包含四个"-"，所以长度为36
 		bill.setBillId(uuid.toString().replaceAll("-", ""));
@@ -55,11 +55,13 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public void modifyBill(Bill bill) {
+	public boolean modifyBill(Bill bill) {
 		try {
 			billMapper.modifyBill(bill);
+			return true;
 		} catch (Exception e) {
-			return;
+			e.printStackTrace();
+			return false;
 		}
 
 	}
@@ -75,25 +77,30 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public void delBill(String billId) {
+	public boolean delBill(String billId) {
 		try {
 			billMapper.delBill(billId);
+			return true;
 		} catch (Exception e) {
-			return;
+			return false;
 		}
 
 	}
 
 	@Override
-	public JSONObject findInOut(String userId) {
+	public JSONObject findInOut(HttpServletRequest request) {
+		String userId = ((User) request.getSession().getAttribute("user")).getUserID();
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		String type = request.getParameter("type");
 		JSONObject out = new JSONObject();
 		JSONObject data = new JSONObject();
 		JSONArray categories = new JSONArray();
 		JSONObject dataByFlag = new JSONObject();
-		dataByFlag.put("billFlag_2",
-				JsonUtil.generateJson(new JSONArray(), billMapper.findInOut(userId, "O", "billFlag_2")));
+		dataByFlag.put("billFlag_2", JsonUtil.generateJson(new JSONArray(),
+				billMapper.findInOut(userId, "O", "billFlag_2", year, month, type)));
 		dataByFlag.put("billFlag_1",
-				JsonUtil.generateJson(categories, billMapper.findInOut(userId, "O", "billFlag_1")));
+				JsonUtil.generateJson(categories, billMapper.findInOut(userId, "支出", "billFlag_1", year, month, type)));
 		data.put("categories", categories);
 		data.put("data", dataByFlag);
 		out.put("out", data);
@@ -101,7 +108,8 @@ public class BillServiceImpl implements BillService {
 		// 支出获取
 		data = new JSONObject();
 		categories = new JSONArray();
-		data.put("data", JsonUtil.generateJson(categories, billMapper.findInOut(userId, "I", "billFlag_1")));
+		data.put("data",
+				JsonUtil.generateJson(categories, billMapper.findInOut(userId, "收入", "billFlag_1", year, month, type)));
 		data.put("categories", categories);
 
 		out.put("in", data);
@@ -122,5 +130,34 @@ public class BillServiceImpl implements BillService {
 		data.put("month", month);
 		data.put("money", money);
 		return data;
+	}
+
+	@Override
+	public void selectBillsByPage(String userId, HttpServletRequest request, HttpServletResponse response) {
+		String pageNow = request.getParameter("pageNow");
+		Page page = null;
+		int totalCount = (int) billMapper.getBillsCount(userId);
+		if (pageNow != null) {
+			page = new Page(totalCount, Integer.parseInt(pageNow));
+		} else {
+			page = new Page(totalCount, 1);
+
+		}
+		page.setPageSize(8);
+		JSONObject out = new JSONObject();
+		JSONArray bills = JSONArray
+				.fromObject(billMapper.selectBillByPage(userId, page.getStartPos(), page.getPageSize()));
+		JSONObject pageJosn = JSONObject.fromObject(page);
+		out.put("page", pageJosn);
+		out.put("bills", bills);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter printWriter = null;
+		try {
+			printWriter = response.getWriter();
+			printWriter.println(out);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

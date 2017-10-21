@@ -12,6 +12,7 @@
 		<result property="billType" column="billType" />
 		<result property="billMoney" column="billMoney" />
 		<result property="isHide" column="isHide" />
+		<result property="billNote" column="billNote" />
 	</resultMap>
 	<!-- 配置映射字段-收入支出视图 -->
 	<resultMap type="com.cqu.financial.entity.BillInOut" id="tab_billInOut">
@@ -47,6 +48,18 @@
 		from bill where
 		billType=#{billType} and userId=#{userId}
 		<choose>
+			<when test="type == 1">
+				and YEAR(billDate) = #{year}
+			</when>
+			<when test="type == 2">
+				and YEAR(billDate) = #{year}
+				and month(billDate) =
+				#{month}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		<choose>
 			<when test="billFlag == 'billFlag_2'">
 				group by (billFlag_2)
 			</when>
@@ -54,6 +67,7 @@
 				group by (billFlag_1)
 			</otherwise>
 		</choose>
+		order by (billFlag_1)
 	</select>
 
 	<!-- 按账单ID查询 -->
@@ -75,15 +89,15 @@
 	<!-- 添加账单记录 -->
 	<insert id="addBill" parameterType="com.cqu.financial.entity.Bill">
 		insert into
-		bill(billId,userId,billFlag_1,billFlag_2,billType,billMoney,billDate,isHide)
+		bill(billId,userId,billFlag_1,billFlag_2,billType,billMoney,billDate,isHide,billNote)
 		values(#{billId},#{userId},
-		#{billFlag_1},#{billFlag_2},#{billType},#{billMoney},#{billDate},#{isHide})
+		#{billFlag_1},#{billFlag_2},#{billType},#{billMoney},#{billDate},#{isHide},#{billNote})
 	</insert>
 
 	<!-- 更改账单记录 -->
 	<update id="modifyBill" parameterType="com.cqu.financial.entity.Bill">
 		update bill set
-		billFlag=#{billFlag},billType=#{billType},billMoney=#{billMoney},billDate=#{billDate},isHide=#{isHide}
+		billFlag_1=#{billFlag_1},billFlag_2=#{billFlag_2},billType=#{billType},billMoney=#{billMoney},billDate=#{billDate},isHide=#{isHide},billNote=#{billNote}
 		where billId=#{billId}
 	</update>
 
@@ -92,4 +106,17 @@
 		delete from bill where billId
 		= #{billId}
 	</delete>
+
+	<!-- bill分页查询 -->
+	<select id="selectBillByPage" resultMap="tab_bill">
+		select * from bill where
+		userId=#{userId} order by (billDate) desc limit
+		#{startPos},#{pageSize}
+	</select>
+	<!-- 获取记录总数 -->
+	<select id="getBillsCount" resultType="long">
+		SELECT COUNT(*) FROM
+		bill
+		WHERE userId = #{userId}
+	</select>
 </mapper>

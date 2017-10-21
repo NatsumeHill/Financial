@@ -2,7 +2,6 @@ package com.cqu.financial.entity;
 
 public class BillInOut {
 	private String billFlag;
-//	private String billFlag2;
 	private String billSumMoney;
 	private String billType;
 

@@ -1,6 +1,7 @@
 package com.cqu.financial.service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,17 @@ public class UserServiceImpl implements UserService {
 		if (userMapper.getUserByName(userName) == null)
 			return false;
 		return true;
+	}
+
+	@Override
+	public User findById(HttpServletRequest request) {
+		String userId = ((User)request.getSession().getAttribute("user")).getUserID();
+		try{
+			return userMapper.selectById(userId);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

@@ -8,7 +8,12 @@
 	</select>
 	<insert id="addUser" parameterType="com.cqu.financial.entity.User">
 		insert into
-		user(userId,userName,userPass) values(#{userID},#{userName}, #{userPass})
+		user(userID,userName,userPass) values(#{userID},#{userName},
+		#{userPass})
 	</insert>
-
+	<!-- 根据用户id查询用户信息 -->
+	<select id="selectById" parameterType="java.lang.String"
+		resultType="com.cqu.financial.entity.User">
+		select * from User where userID = #{userId}
+	</select>
 </mapper>

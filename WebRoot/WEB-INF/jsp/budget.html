@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>budget</title>
+    <!-- 引入 ECharts 文件 -->
+    <script src="../js/echarts.js"></script>
+
+    <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/budget.css" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="main-container">
+        <div class="view-container">
+            <div class="budget-view">
+                <div class="budget-view-head">
+                    <div class="title">设定预算/预算结余</div>
+                    <div class="input-div">
+                        <div class="btn-toolbar" role="toolbar" aria-label="...">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
+                                <span class="input-group-addon">元/￥</span>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="budget-pic"></div>
+            </div>
+            <div class="surplus-view">
+                <div class="surplus-view-head">
+                    <div class="title">结余查看</div>
+                    <div class="input-div">
+                        <div class="btn-toolbar" role="toolbar" aria-label="...">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
+                                <span class="input-group-addon">年</span>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="surplus-pic"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/budget.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery.1.11.3.js"></script>
+</body>
+</html>

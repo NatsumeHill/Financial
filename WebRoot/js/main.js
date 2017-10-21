@@ -1,94 +1,10 @@
 /**
  * Created by K_Verdant on 2016-7-1.
  */
-var incomeChart = echarts.init(document.getElementById('income'));
-$.ajax({
-	url : '../bill/jsonInOut',
-	type : 'GET',
-	dataType : 'json',
-}).done(function(jsonData) {
-	var incomeOption = {
-		tooltip : {
-			trigger : 'item',
-			formatter : "{a} <br/>{b}: {c} ({d}%)"
-		},
-		legend : {
-			orient : 'vertical',
-			x : 'left',
-			data : jsonData.out.categories
-		},
-		series : [ {
-			name : '访问来源',
-			type : 'pie',
-			selectedMode : 'single',
-			radius : [ 0, '30%' ],
 
-			label : {
-				normal : {
-					position : 'inner'
-				}
-			},
-			labelLine : {
-				normal : {
-					show : false
-				}
-			},
-			data : jsonData.out.data.billFlag_1
-		}, {
-			name : '访问来源',
-			type : 'pie',
-			radius : [ '40%', '55%' ],
-
-			data : jsonData.out.data.billFlag_2
-		} ]
-	};
-	incomeChart.setOption(incomeOption);
-
-    var payChart = echarts.init(document.getElementById('pay'));
-var payOption = {
-    tooltip : {
-        trigger : 'item',
-        formatter : "{a} <br/>{b}: {c} ({d}%)"
-    },
-    legend : {
-        orient : 'vertical',
-        x : 'left',
-        data : jsonData.in.categories
-    },
-    series : [ {
-        name : '访问来源',
-        type : 'pie',
-        radius : [ '50%', '70%' ],
-        avoidLabelOverlap : false,
-        label : {
-            normal : {
-                show : false,
-                position : 'center'
-            },
-            emphasis : {
-                show : true,
-                textStyle : {
-                    fontSize : '30',
-                    fontWeight : 'bold'
-                }
-            }
-        },
-        labelLine : {
-            normal : {
-                show : false
-            }
-        },
-        data : jsonData.in.data
-    } ]
-};
-payChart.setOption(payOption);
-
-}).fail(function() {
-	console.log("error");
-}).always(function() {
-	console.log("complete");
+$(function(){
+	setInAndOut(null,null,0);
 });
-
 
 $.ajax({
 	url: '../bill/jsonTrend',
@@ -98,48 +14,47 @@ $.ajax({
 })
 .done(function(data) {
 	var trendChart = echarts.init(document.getElementById('trend-pic'));
-var trendOption = {
-	tooltip : {
-		trigger : 'axis'
-	},
-	legend : {
-		data : [ '消费趋势' ]
-	},
-	grid : {
-		left : '3%',
-		right : '4%',
-		bottom : '3%',
-		containLabel : true
-	},
-	xAxis : [ {
-		type : 'category',
-		boundaryGap : false,
-		data : data.month
-	} ],
-	yAxis : [ {
-		type : 'value'
-	} ],
-	series : [ {
-		name : '消费趋势',
-		type : 'line',
-		stack : '总量',
-		areaStyle : {
-			normal : {}
+	var trendOption = {
+		tooltip : {
+			trigger : 'axis'
 		},
-		data : data.money
-	} ]
-};
-trendChart.setOption(trendOption);
-	console.log("success");
-})
-.fail(function() {
-	console.log("error");
-})
-.always(function() {
-	console.log("complete");
-});
-
-
+		legend : {
+			data : [ '消费趋势' ]
+		},
+		grid : {
+			left : '3%',
+			right : '4%',
+			bottom : '3%',
+			containLabel : true
+		},
+		xAxis : [ {
+			type : 'category',
+			boundaryGap : false,
+			data : data.month
+		} ],
+		yAxis : [ {
+			type : 'value'
+		} ],
+		series : [ {
+			name : '消费趋势',
+			type : 'line',
+			stack : '总量',
+			areaStyle : {
+				normal : {}
+			},
+			data : data.money
+		} ]
+	};
+	trendChart.setOption(trendOption);
+	})
+	.fail(function() {
+		
+	})
+	.always(function(xhr) {
+        if(xhr.status == 302){
+            window.location.href = '../user/geUserInfo';
+        }
+    });
 
 var analysisChart = echarts.init(document.getElementById('analysis-pic'));
 var analyOption = {
@@ -203,3 +118,106 @@ var overageOption = {
 	} ]
 };
 overageChart.setOption(overageOption);
+
+$('#submit').click(function(event) {
+	/* Act on the event */
+	if($('#year').val() == '' && $('#month').val() == '') setInAndOut(null,null,0);
+
+	if($('#year').val() != '' && $('#month').val() == '') setInAndOut($('#year').val(),null,1);
+
+	if($('#year').val() != '' && $('#month').val() != '') setInAndOut($('#year').val(),$('#month').val(),2);
+});
+
+function setInAndOut(year,month,type){
+	$.ajax({
+	url : '../bill/jsonInOut',
+	type : 'POST',
+	data : {year:year,month:month,type:type},
+	dataType : 'json'
+}).done(function(jsonData) {
+	var incomeChart = echarts.init(document.getElementById('income'));
+	var incomeOption = {
+		tooltip : {
+			trigger : 'item',
+			formatter : "{a} <br/>{b}: {c} ({d}%)"
+		},
+		legend : {
+			orient : 'vertical',
+			x : 'left',
+			data : jsonData.out.categories
+		},
+		series : [ {
+			name : '访问来源',
+			type : 'pie',
+			selectedMode : 'single',
+			radius : [ 0, '50%' ],
+
+			label : {
+				normal : {
+					position : 'inner'
+				}
+			},
+			labelLine : {
+				normal : {
+					show : false
+				}
+			},
+			data : jsonData.out.data.billFlag_1
+		}, {
+			name : '访问来源',
+			type : 'pie',
+			radius : [ '60%', '75%' ],
+
+			data : jsonData.out.data.billFlag_2
+		} ]
+	};
+	incomeChart.setOption(incomeOption);
+
+    var payChart = echarts.init(document.getElementById('pay'));
+	var payOption = {
+	    tooltip : {
+	        trigger : 'item',
+	        formatter : "{a} <br/>{b}: {c} ({d}%)"
+	    },
+	    legend : {
+	        orient : 'vertical',
+	        x : 'left',
+	        data : jsonData.in.categories
+	    },
+	    series : [ {
+	        name : '访问来源',
+	        type : 'pie',
+	        radius : [ '50%', '70%' ],
+	        avoidLabelOverlap : false,
+	        label : {
+	            normal : {
+	                show : false,
+	                position : 'center'
+	            },
+	            emphasis : {
+	                show : true,
+	                textStyle : {
+	                    fontSize : '30',
+	                    fontWeight : 'bold'
+	                }
+	            }
+	        },
+	        labelLine : {
+	            normal : {
+	                show : false
+	            }
+	        },
+	        data : jsonData.in.data
+	    } ]
+	};
+	payChart.setOption(payOption);
+
+	}).fail(function() {
+		
+	}).always(function(xhr) {
+        if(xhr.status == 302){
+            window.location.href = '../user/geUserInfo';
+        }
+    });
+
+}
